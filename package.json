@@ -1,0 +1,50 @@
+{
+  "name": "cunnar",
+  "version": "0.1.0",
+  "description": "meiya pico cunnar sdk",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "rollup -c"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bellchet58/cunnar-node.git"
+  },
+  "keywords": [
+    "cunnar",
+    "meiyapico"
+  ],
+  "browser": "build/index.js",
+  "author": "bellchet58",
+  "license": "MIT",
+  "types": "./src/@types/index.d.ts",
+  "bugs": {
+    "url": "https://github.com/bellchet58/cunnar-node/issues"
+  },
+  "homepage": "https://github.com/bellchet58/cunnar-node#readme",
+  "dependencies": {
+    "@types/lodash": "^4.14.172",
+    "@types/request-promise": "^4.1.48",
+    "axios": "^0.21.1",
+    "lodash": "^4.17.21",
+    "querystring": "^0.2.1",
+    "request-promise": "^4.2.6"
+  },
+  "devDependencies": {
+    "@rollup/plugin-json": "^4.1.0",
+    "@types/jest": "^27.0.1",
+    "cd": "^0.3.3",
+    "cunnar": "/Users/liubj/git/cunnar-node",
+    "jest": "^27.0.6",
+    "rollup": "^2.56.2",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-typescript": "^1.0.1",
+    "source-map-loader": "^3.0.0",
+    "ts-jest": "^27.0.5",
+    "ts-loader": "^9.2.5",
+    "tslib": "^2.3.1",
+    "typescript": "^4.3.5"
+  }
+}
