@@ -2,7 +2,8 @@
   "name": "cunnar",
   "version": "0.1.0",
   "description": "meiya pico cunnar sdk",
-  "main": "src/index.js",
+  "main": "build/index.js",
+  "module": "build/index.es.js",
   "scripts": {
     "test": "jest",
     "build": "rollup -c"
