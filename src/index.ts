@@ -77,10 +77,10 @@ import compact from 'lodash/fp/compact'
 import omit from 'lodash/fp/omit'
 import set from 'lodash/fp/set'
 import Axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
-import rp from 'request-promise'
-import fs from 'fs'
+import * as fs from 'fs'
 import { promisify } from 'util'
 import { AccountResponse, CommonRequest, ContractLengthResponse, ContractResponse, ContractStampRequest, ContractStampWrapResponse, ContractUploadRequest, HasStampResponse, IsCertInstallResponse, StampCreateRequest, VerifyResponse } from './@types'
+import needle from 'needle';
 
 type URL = string
 
@@ -127,19 +127,13 @@ class Cunnar {
   async doUpload(url: URL, params: ContractUploadRequest) {
     const signed = omit('inputStream')(this.getSignedParam<ContractUploadRequest>(params, this.appSecret));
     delete signed.inputStream;
-    const result = await rp({
-      method: 'POST',
-      uri: `${this.api.defaults.baseURL}${url}?${stringify(signed as ParsedUrlQueryInput)}`,
-      formData: {
-        inputStream: {
-          value: params.inputStream,
-          options: {
-            filename: params.inputStream.path,
-          }
-        }
-      }
-    })
-    return result && JSON.parse(result)
+    const uri = `${this.api.defaults.baseURL}${url}?${stringify(signed as ParsedUrlQueryInput)}`;
+    const result = await needle('post', uri, { inputStream: params.inputStream }, {
+      multipart: true,
+      decode: true,
+      parse: true
+    });
+    return result.body && JSON.parse(result.body.toString())
   }
 
   /**
@@ -337,10 +331,9 @@ class Cunnar {
     const signed = (this.getSignedParam({
       contract_id: contractId
     }, this.appSecret));
-    const data = await rp({
-      url: `${this.api.defaults.baseURL}/opencloud/api/contract/download.json?${stringify(signed)}`,
-      resolveWithFullResponse: true,
-    }).pipe(fs.createWriteStream(targetPath))
+    const url = `${this.api.defaults.baseURL}/opencloud/api/contract/download.json?${stringify(signed)}`;
+    const targetStream = fs.createWriteStream(targetPath);
+    const data = await needle.get(url).pipe(targetStream);
     return data;
   }
 
@@ -351,10 +344,8 @@ class Cunnar {
    * @returns 
    */
   async downloadStamp(accessToken: string, targetPath: string) {
-    const data = await rp({
-      url: `${this.api.defaults.baseURL}/opencloud/api/account/stamp/download.json?access_token=${accessToken}`,
-      resolveWithFullResponse: true,
-    }).pipe(fs.createWriteStream(targetPath))
+    const url = `${this.api.defaults.baseURL}/opencloud/api/account/stamp/download.json?access_token=${accessToken}`;
+    const data = await needle.get(url).pipe(fs.createWriteStream(targetPath))
     return data;
 
   }

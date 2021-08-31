@@ -26,22 +26,22 @@
   "homepage": "https://github.com/bellchet58/cunnar-node#readme",
   "dependencies": {
     "@types/lodash": "^4.14.172",
-    "@types/request-promise": "^4.1.48",
+    "@types/needle": "^2.5.2",
     "axios": "^0.21.1",
     "lodash": "^4.17.21",
-    "querystring": "^0.2.1",
-    "request-promise": "^4.2.6"
+    "needle": "^2.9.0",
+    "querystring": "^0.2.1"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^20.0.0",
     "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^13.0.4",
+    "@rollup/plugin-typescript": "^8.2.5",
     "@types/jest": "^27.0.1",
     "cd": "^0.3.3",
     "cunnar": "/Users/liubj/git/cunnar-node",
     "jest": "^27.0.6",
     "rollup": "^2.56.2",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-typescript": "^1.0.1",
     "source-map-loader": "^3.0.0",
     "ts-jest": "^27.0.5",
     "ts-loader": "^9.2.5",

@@ -1,4 +1,4 @@
-const { Cunnar, sha256Hex, sign } = require('../src/index');
+const { Cunnar, sha256Hex, sign } =require('../build/index')
 const fs = require('fs');
 const path = require('path')
 const { promisify } = require('util');
@@ -22,7 +22,8 @@ describe("utils test", () => {
   })
   test("get access Token", async () => {
     const result = await cunnar.getAccessToken(userId);
-    expect(result).toHaveProperty("access_token")
+    // expect(result).toHaveProperty("access_token")
+    expect(result).toBe(0)
   })
   test("user id exists?", async () => {
     const result = await cunnar.exists({ phone: mobile})
@@ -57,8 +58,8 @@ describe("utils test", () => {
 
   test("upload a contract", async () => {
     const stream = fs.createReadStream(path.resolve('./output1.pdf'));
-    const result = await cunnar.uploadContract({ contract_id: '2217067', index: 0, inputStream: stream })
-    expect(typeof result).toBe("string")
+    const result = await cunnar.uploadContract({ contract_id: '2206467', index: 0, inputStream: stream })
+    expect(result.upload_length).toBeGreaterThan(0);
   })
 
   test("get contract upload length", async () => {
@@ -73,7 +74,7 @@ describe("utils test", () => {
 
 
   test("download a stamp", async () => {
-    const result = await cunnar.downloadStamp('6cf80feb-f1a0-4589-9f20-4a36937f0e01', 'stampb.png');
+    const result = await cunnar.downloadStamp('ce39d142-034d-40f9-9608-e93062cdda9d', 'stampb.png');
     expect(result).toBe(0)
   })
 
@@ -94,7 +95,7 @@ describe("utils test", () => {
     expect(result).toBe(true)
   })
   test("download a contract", async () => {
-    const result = await cunnar.downloadContract('XXXXXXX', 'result.pdf');
+    const result = await cunnar.downloadContract('2206467', 'result.pdf');
     expect(result).toBe(0)
   })
 });
